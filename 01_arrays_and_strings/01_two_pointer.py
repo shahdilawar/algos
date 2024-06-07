@@ -164,6 +164,47 @@ class TwoPointers:
         log.info("End of combine_sorted_array method")
         return sorted_list        
 
+    '''
+    test if string is in sub-sequence method.
+        * we need to check if the characters of "s" appear in the same
+        order in "t", with gaps allowed. 
+        * s is a subsequence of t if we can "find" all the letters of s,
+        which means that i == s.length at the end of the algorithm
+        * Using two pointers it will be O(1) space and O(n) time complexity.
+    '''
+    def is_subsequence(self, source_str : str, target_str : str) -> bool:
+        log.info("Start of is_subsequence method : ")
+
+        # print source and target strings
+        log.debug(f"Source string is : {source_str}")
+        log.debug(f"Target string is : {target_str}")
+
+        source_str_index = target_str_index = 0
+
+        '''
+        1. Iterate through both string chars.
+        2. if source_str[source_str_index] matches increment index.
+        3. post execution if s has moved all the way to end then 
+            we found a match.
+        '''
+        while ( source_str_index < len(source_str) 
+            and target_str_index < len(target_str) ):
+            #logging the characters
+            log.debug(f" source_str char at {source_str_index} is : {source_str[source_str_index]}")
+            log.debug(f" target_str char at {target_str_index} is : {target_str[target_str_index]}")
+
+            #check for match
+            if ( source_str[source_str_index] == target_str[target_str_index] ):
+                source_str_index += 1
+            #increment target str ir-respective of match.
+            target_str_index += 1
+
+        #if source_str has traversed its entire lenth it means that
+        #subsequence condition has been acheived.
+        log.info("End of is_subsequence method : ")
+        return (source_str_index == len(source_str))
+
+
 def test_class_methods():
     #initialize TwoPointers class
     two_pointer = TwoPointers("Hello")
@@ -190,11 +231,20 @@ def test_class_methods():
     two_pointer.separator_block()   
 
     #calling combine sorted array method
-    list1 = [1, 5, 8, 18]
-    list2 = [2, 6, 7, 9, 17, 25, 27, 30]
+    list1 = [ 1, 5, 8, 18 ]
+    list2 = [ 2, 6, 7, 9, 17, 25, 27, 30 ]
 
     sorted_list_arr = two_pointer.combine_sorted_array(list1, list2)
     print( f"Sorted list is : {sorted_list_arr}" )
+
+    #separator block
+    two_pointer.separator_block()   
+
+    #Test sub sequence method
+    source_str = input("Please enter source string : ")
+    target_str = input("Please enter target string : ")
+    result = two_pointer.is_subsequence(source_str, target_str)
+    print(f"Is {source_str} is a subsequence of  {target_str} : {result}")
 
 if __name__ == "__main__":
     test_class_methods()
