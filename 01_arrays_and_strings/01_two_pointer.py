@@ -201,10 +201,108 @@ class TwoPointers:
 
         #if source_str has traversed its entire lenth it means that
         #subsequence condition has been acheived.
-        log.info("End of is_subsequence method : ")
-        return (source_str_index == len(source_str))
+        log.info(" End of is_subsequence method : ")
+        return (source_str_index == len( source_str ))
 
+    '''
+        * This method will reverse the string.
+        * The input string is given as an array of characters s.
+        * The challenge is to modify input array with o[1] extra memory
+    '''
+    def reverse_string(self, source_str : list[str] ) -> str:
+        log.info("Start of reverse_string method : ")  
+        log.debug("source string is : {source_str}")
 
+        #raise error if list is empty.
+        if ( len(source_str) == 0):
+            raise ValueError("Source string cannot be empty")
+        
+        i = 0
+        j = len(source_str) - 1
+
+        #Iterate through the loop and assign
+        while (i < j):            
+            source_str[i], source_str[j] = source_str[j], source_str[i]
+            log.debug(f"char at {i} is : {source_str[i]}")
+            log.debug(f"char at {j} is : {source_str[j]}")
+            i += 1
+            j -= 1
+ 
+        log.info("End of reverse_string mathod : ")
+        return source_str
+
+    '''
+    Squares of a Sorted Array
+        * Given an integer array nums sorted in non-decreasing order, 
+        return an array of the squares of each number sorted in 
+        non-decreasing order.
+        * Squaring each element and sorting the new array is very 
+        trivial, could you find an O(n) solution using a different 
+        approach?
+    '''
+    def squares_of_sorted_array(self, input_arr : list[int]) -> list[int]:
+        '''
+        * Use the two pointer approach to square compare and
+          move the pointers.
+        '''
+        log.info("Started squares_of_sorted_array method : ")
+        log.info(f"input list is : {input_arr}")
+
+        # #moderate approach
+        # #Time complexity is O(n log(n))
+        # #Space complexity is O(n)
+        # log.info("Ending squares_of_sorted_array method : ")
+        # #use list comprehension and sorted
+        # return sorted( x*x for x in input_arr)
+
+        #check for list emptiness
+        if ( len(input_arr) == 0):
+            raise ValueError("List cant be empty")
+        
+        input_arr_len = len(input_arr)
+        log.debug(f"i/p array length : {input_arr_len}")
+        left_index = 0
+        right_index = input_arr_len - 1
+        
+        #initializing sorted list with 0 of input array length.
+        squares_of_sorted_list = [0] * input_arr_len
+        log.debug(f"sorted array length : {len(squares_of_sorted_list)}")
+
+        '''
+        The key is non-decreasing numbers. it means negative
+        and positive numbers in the list will be in kind of asc 
+        sorted in their context.
+        * Lets do a abs(left) to abs(right) comparison and place 
+        the larger value in last cell of new list. 
+        * This will provide the sorted list.
+        * use for loop to iterate from back till 0 and step by -1.
+        '''
+        for i in range(input_arr_len - 1, -1, -1):
+            
+            log.debug(f"left element : {abs(input_arr[left_index])}")
+            log.debug(f"right element : {abs(input_arr[right_index])}")
+
+            #Compare absolute values at left and right pointers
+            if ( abs(input_arr[left_index]) 
+                < abs(input_arr[right_index]) ):
+                #assign the right index value to be squared
+                square = input_arr[right_index]
+                # move the right pointer
+                right_index -= 1
+            else:
+                #assign the left index value to be squared
+                square = input_arr[left_index]
+                #move the left pointer
+                left_index += 1
+            
+            #Place the value in square sorted list
+            squares_of_sorted_list[i] = square * square
+        
+        return squares_of_sorted_list
+
+        
+
+                
 def test_class_methods():
     #initialize TwoPointers class
     two_pointer = TwoPointers("Hello")
@@ -245,6 +343,19 @@ def test_class_methods():
     target_str = input("Please enter target string : ")
     result = two_pointer.is_subsequence(source_str, target_str)
     print(f"Is {source_str} is a subsequence of  {target_str} : {result}")
+
+    #separator block
+    two_pointer.separator_block()  
+
+    source_str_list = ["H", "a", "n", "n", "a", "h"]
+    reversed_list = two_pointer.reverse_string(source_str_list)
+    print(f" Reversed list is : {reversed_list}")
+
+    #separator block
+    two_pointer.separator_block()  
+    input_list = [-7, -3, 2, 3, 11]
+    sorted_list = two_pointer.squares_of_sorted_array(input_list)
+    print(f"Squared list is : {sorted_list}")
 
 if __name__ == "__main__":
     test_class_methods()
