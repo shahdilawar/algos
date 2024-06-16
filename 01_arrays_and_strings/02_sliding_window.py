@@ -188,6 +188,37 @@ class SlidingWindow:
             max_sum = max( max_sum, curr_sum)
             log.info("Ended : find_max_sum_in_fixed_sub_array method")
         return max_sum
+    
+    # Find a contiguous subarray whose length is equal to k that has 
+    # the maximum average value and return this value. .
+    def find_max_average(self, nums: list[int],
+                          fixed_array_length : int) -> float:
+        log.info("Started : find_max_average method")
+        # Initialize the variables.
+        max_average = curr_sum = 0
+        
+        # Iterate through to first range.
+        for i in range(fixed_array_length):
+            curr_sum += nums[i]   
+        
+        log.debug(f"curr_sum in first window is : {curr_sum}")
+        #calculate the average for fixed length target window
+        max_average = curr_sum / fixed_array_length
+        log.debug(f"average after first iteration is : {max_average}")
+        
+        # Iterate through next sliding window by 
+        # decrementing the left most value and adding the next one.
+        for j in range( fixed_array_length, len(nums) ):
+            # Add the next element and remove the previous first
+            # element to sliding window
+            curr_sum += ( nums[j] - nums[j - fixed_array_length] )
+            log.debug(f"curr_sum in {j}, {j - fixed_array_length} window is : {curr_sum}")
+            log.debug(f"average is : {max_average}")
+            # check the maximum average by using max function.
+            max_average = max(max_average, (curr_sum / fixed_array_length))
+         
+        log.info("Ended : find_max_average method")
+        return max_average
 
 def test_class_methods():
 
@@ -225,6 +256,14 @@ def test_class_methods():
     max_sum = sliding_window.find_max_sum_in_fixed_sub_array(num_list, 4)
     print(f"Max value in {num_list} is : {max_sum}")
 
+    print("-" * 60)
+    #Test the max average method
+    nums = [1, 12, -5, -6, 50, 3]
+    fixed_arr_len = 4
+    #nums = [5]
+    #fixed_arr_len = 1
+    max_avg = sliding_window.find_max_average(nums, fixed_arr_len)
+    print(f" maximum average in {nums} is : {max_avg}")
 
 if __name__ == "__main__":
     test_class_methods()
