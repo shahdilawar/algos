@@ -30,6 +30,8 @@ log.basicConfig(level=log.INFO)
 class SlidingWindow:
 
     #find the longest subarray with a sum less than or equal to k
+    # work done in each loop iteration is amortized constant, 
+    # so this algorithm has a runtime of O(n) and O(1) space complexity
     def find_longest_subarray_length(self, nums : list[int], sum : int) -> int:
         log.info("Started : find_longest_subarray_lenth method")
         log.info(f"list is : {nums}")
@@ -74,6 +76,8 @@ class SlidingWindow:
     
     # Method to identify the longest array length post zeroes flip. 
     # we can flip only one zero at a time. 
+    # work done in each loop iteration is amortized constant, 
+    # so this algorithm has a runtime of O(n) and O(1) space complexity    
     def flip_zeroes_subarray_length(self, binary_string : str) -> int:
         log.info("Started : flip_zeroes_subarray_length method")
 
@@ -119,6 +123,9 @@ class SlidingWindow:
     #Given an array of positive integers nums and an integer k, 
     # return the number of subarrays where the product of all the 
     # elements in the subarray is strictly less than k.
+    # work done in each loop iteration is amortized constant, 
+    # so this algorithm has a runtime of O(n) and O(1) space complexity
+ 
     def find_subarrays_that_match(self, nums : list[int], 
                                   match_val : int) -> int:
         log.info("Started : find_subarrays_that_match method")
