@@ -110,11 +110,11 @@ class SlidingWindow:
                 #iterate left_index
                 left_index += 1
             
-        # Compare the subarray sliding window length
-        # and store in long_window_length
-        # memorize sliding window length as (right-left+1)
-        log.debug(f"zeroes_count is : {zeroes_count}")
-        window_length = max( window_length, 
+             # Compare the subarray sliding window length
+             # and store in long_window_length
+             # memorize sliding window length as (right-left+1)
+            log.debug(f"zeroes_count is : {zeroes_count}")
+            window_length = max( window_length, 
                                      right_index - left_index + 1)
 
         log.info("Ended : flip_zeroes_subarray_length method")
@@ -219,6 +219,42 @@ class SlidingWindow:
          
         log.info("Ended : find_max_average method")
         return max_average
+    
+    #Find the longest ones in input string.
+    def find_longest_ones_in_list(self, nums: list[int], k: int) -> int:
+        
+        log.info("Started : find_longest_ones_in_list method")
+        if ( len(nums) == 0 ):
+            raise ValueError("List can't be empty")
+        
+        log.info(f"List is : {nums} ")
+
+        # initialize the variable
+        zeroes_count = left_index  = window_length = 0
+        
+        #Iterate till we get the zeroes       
+        for right_index in range( len(nums) ):
+            '''
+            Check the occurence of zero and if so increment 
+            the zeroes count.
+            '''
+            if ( nums[right_index] == 0 ):
+                zeroes_count += 1
+                
+            while (zeroes_count > k):
+                
+                #check if we found zero
+                if ( nums[left_index] == 0 ):
+                    zeroes_count -= 1
+                #move the left index
+                left_index += 1
+        
+            window_length = max(window_length, 
+                                right_index - left_index + 1)
+        
+        log.info("Ended : find_longest_ones_in_list method")
+        
+        return window_length
 
 def test_class_methods():
 
@@ -264,6 +300,14 @@ def test_class_methods():
     #fixed_arr_len = 1
     max_avg = sliding_window.find_max_average(nums, fixed_arr_len)
     print(f" maximum average in {nums} is : {max_avg}")
+
+    print ("-" * 60)
+    #test the longest ones length
+    binary_list = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1]
+    max_zeroes_to_flip = 3
+    max_ones_arr_length = sliding_window.find_longest_ones_in_list(
+                                binary_list, max_zeroes_to_flip)
+    print(f"Ones max length : {max_ones_arr_length}")
 
 if __name__ == "__main__":
     test_class_methods()
