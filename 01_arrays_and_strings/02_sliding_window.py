@@ -115,14 +115,49 @@ class SlidingWindow:
 
         log.info("Ended : flip_zeroes_subarray_length method")
         return window_length
-
+    
+    #Given an array of positive integers nums and an integer k, 
+    # return the number of subarrays where the product of all the 
+    # elements in the subarray is strictly less than k.
+    def find_subarrays_that_match(self, nums : list[int], 
+                                  match_val : int) -> int:
+        log.info("Started : find_subarrays_that_match method")
+        # if match_val is <= 1, then no subarrays can exist.
+        if ( match_val <= 1 ):
+            return 0
+        
+        # if list is empty
+        if (len(nums) == 0):
+            raise ValueError("List cant be empty")
+        
+        #initialize the variables
+        left_index = no_of_valid_sub_arrays = 0
+        curr_sum = 1
+        
+        # Keep right index fixed and check if product of elements 
+        # satisfy match value. if so find the numbe of subarrays from
+        # left index. 
+        for right_index in range(len(nums)):
+            # multiply elements of list
+            curr_sum *= nums[right_index]
+            log.debug(f"curr_sum is : {curr_sum} ")
+            # check if cur_sum exceeds match value
+            while (curr_sum >= match_val):
+                curr_sum //= nums[left_index]
+                left_index += 1
+            
+            # Add the valid subarrays 
+            no_of_valid_sub_arrays += right_index - left_index + 1
+        
+        log.info("Ended : find_subarrays_that_match method")
+        return no_of_valid_sub_arrays
     
 def test_class_methods():
 
     #Initialize the class
     sliding_window = SlidingWindow()
 
-    #Test the sliding window find_longest_subarray_length
+    #Test the find_longest_subarray_length
     num_list = [3, 1, 2, 7, 4, 2, 1, 1, 5]
     target_sum = 9
     print ("-" * 60)
@@ -136,6 +171,15 @@ def test_class_methods():
     binary_str = "1101100111"
     zeroes_length = sliding_window.flip_zeroes_subarray_length(binary_str)
     print(f"zeroes max length : {zeroes_length}")
+
+    print("-" * 60)
+    #Test the valid subarrays method
+    num_list = [10, 5, 2, 6]
+    match_val = 100
+    no_of_valid_arrays = sliding_window.find_subarrays_that_match(num_list, 
+                                                                  match_val)
+    print(f"no_of_valid_arrays is : {no_of_valid_arrays} ")
+
 
 if __name__ == "__main__":
     test_class_methods()
