@@ -158,7 +158,37 @@ class SlidingWindow:
         
         log.info("Ended : find_subarrays_that_match method")
         return no_of_valid_sub_arrays
-    
+
+    # Given an integer array nums and an integer k, find the sum of 
+    # the subarray with the largest sum whose length is k
+    # The total for loop iterations is equal to n, where n is length
+    # of nums. So this algorithm has a runtime of O(n) and O(1) space complexity
+    def find_max_sum_in_fixed_sub_array(self , nums : list[int], 
+                                        array_fixed_length : int) -> int:
+        log.info("Started : find_max_sum_in_fixed_sub_array method")
+        log.debug(f"List is : {nums}")
+        if (len(nums) == 0):
+            raise ValueError("List cant be empty")
+
+        #initialize the variables.
+        curr_sum = max_sum = 0
+        # move to fixed length first.
+        for i in range(array_fixed_length):
+            curr_sum += nums[i]
+        
+        max_sum = curr_sum
+        # iterate through the next range by sliding through window
+        # length
+        for i in range(array_fixed_length, len(nums)):
+            log.debug(f" start index after initial move is : {i}")
+            log.debug(f"remove index is : {i - array_fixed_length}")
+            curr_sum = nums[i] - nums[i - array_fixed_length]
+
+            #check the maximum value against each iter
+            max_sum = max( max_sum, curr_sum)
+            log.info("Ended : find_max_sum_in_fixed_sub_array method")
+        return max_sum
+
 def test_class_methods():
 
     #Initialize the class
@@ -186,6 +216,14 @@ def test_class_methods():
     no_of_valid_arrays = sliding_window.find_subarrays_that_match(num_list, 
                                                                   match_val)
     print(f"no_of_valid_arrays is : {no_of_valid_arrays} ")
+
+    print("-" * 60)
+    #Test the max sum method
+    num_list = [3, -1, 4, 12, -8, 5, 6]
+    array_range = 4
+
+    max_sum = sliding_window.find_max_sum_in_fixed_sub_array(num_list, 4)
+    print(f"Max value in {num_list} is : {max_sum}")
 
 
 if __name__ == "__main__":
