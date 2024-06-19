@@ -8,6 +8,7 @@ i and j, or left and right which each represent an index of the array
 or string.
 '''
 import logging as log
+from Utility_Module import utility_decorator
 
 #set logging level at debug
 log.basicConfig(level=log.INFO)
@@ -23,9 +24,8 @@ class TwoPointers:
         log.info("-" * 50)
 
     # Test if two strings are palindrome
+    @utility_decorator
     def is_palindrome(self, input_string : str) -> bool:
-        log.info("Started is_palindrome method")
-
         #left index initialized to start index of string
         left_index = 0
         #right index initialized to start index of string
@@ -52,7 +52,6 @@ class TwoPointers:
         
         #if we exit the loop then it means the characters on both
         #directions have matched. So return true.
-        log.info("End of is_palindrome method")
         return True
 
     '''
@@ -65,9 +64,9 @@ class TwoPointers:
         * We use two pointer technique to acheive O(1) space and 
           O(n) time complexity.
     '''
+    @utility_decorator
     def check_for_target_sum(self, arr1 : list[int],
                               target_sum : int) -> bool:
-        log.info("Started check_for_target_sum method")
         #check if list is empty raise error
         if ( len(arr1) == 0 ):
             raise ValueError("List cant be empty")
@@ -106,7 +105,6 @@ class TwoPointers:
                 left_index += 1
         
         # if the passed target_sum does not add up to passed integers.
-        log.info("End of check_for_target_sum method")    
         return False
 
     '''
@@ -116,9 +114,9 @@ class TwoPointers:
         * If we use two pointer it will be O(n+m) time and O(1)
           space complexity.
     '''
+    @utility_decorator
     def combine_sorted_array(self, arr1 : list[int],
                               arr2 : list[int]) -> list[int]:
-        log.info("Started combine_sorted_array method")
         #initialize the indexes.
         arr1_index = arr2_index = 0
         #inititialize resultant sorted list
@@ -161,7 +159,6 @@ class TwoPointers:
             sorted_list.append(arr2[arr2_index])  
             arr2_index += 1
 
-        log.info("End of combine_sorted_array method")
         return sorted_list        
 
     '''
@@ -172,9 +169,8 @@ class TwoPointers:
         which means that i == s.length at the end of the algorithm
         * Using two pointers it will be O(1) space and O(n) time complexity.
     '''
+    @utility_decorator
     def is_subsequence(self, source_str : str, target_str : str) -> bool:
-        log.info("Start of is_subsequence method : ")
-
         # print source and target strings
         log.debug(f"Source string is : {source_str}")
         log.debug(f"Target string is : {target_str}")
@@ -201,7 +197,6 @@ class TwoPointers:
 
         #if source_str has traversed its entire lenth it means that
         #subsequence condition has been acheived.
-        log.info(" End of is_subsequence method : ")
         return (source_str_index == len( source_str ))
 
     '''
@@ -209,8 +204,8 @@ class TwoPointers:
         * The input string is given as an array of characters s.
         * The challenge is to modify input array with o[1] extra memory
     '''
+    @utility_decorator
     def reverse_string(self, source_str : list[str] ) -> str:
-        log.info("Start of reverse_string method : ")  
         log.debug("source string is : {source_str}")
 
         #raise error if list is empty.
@@ -228,7 +223,6 @@ class TwoPointers:
             i += 1
             j -= 1
  
-        log.info("End of reverse_string mathod : ")
         return source_str
 
     '''
@@ -240,12 +234,12 @@ class TwoPointers:
         trivial, could you find an O(n) solution using a different 
         approach?
     '''
+    @utility_decorator
     def squares_of_sorted_array(self, input_arr : list[int]) -> list[int]:
         '''
         * Use the two pointer approach to square compare and
           move the pointers.
         '''
-        log.info("Started squares_of_sorted_array method : ")
         log.info(f"input list is : {input_arr}")
 
         # #moderate approach
@@ -306,17 +300,11 @@ class TwoPointers:
 def test_class_methods():
     #initialize TwoPointers class
     two_pointer = TwoPointers("Hello")
-    
-    #separator block
-    two_pointer.separator_block()
 
     #Call method to check palindrome
     input_str = input("please enter string to check if it's palindrome : ")
     flag = two_pointer.is_palindrome(input_str)
     log.info(f"{input_str} is a palindrome : {flag}")
-
-    #separator block
-    two_pointer.separator_block()
 
     #Test target_sum method
     int_list = [1, 2, 4, 6, 8, 10, 12, 15, 19]
@@ -325,9 +313,6 @@ def test_class_methods():
     result = two_pointer.check_for_target_sum(int_list, target_sum)
     log.info(f"The target sum achieved : {result}")
 
-    #separator block
-    two_pointer.separator_block()   
-
     #calling combine sorted array method
     list1 = [ 1, 5, 8, 18 ]
     list2 = [ 2, 6, 7, 9, 17, 25, 27, 30 ]
@@ -335,24 +320,16 @@ def test_class_methods():
     sorted_list_arr = two_pointer.combine_sorted_array(list1, list2)
     print( f"Sorted list is : {sorted_list_arr}" )
 
-    #separator block
-    two_pointer.separator_block()   
-
     #Test sub sequence method
     source_str = input("Please enter source string : ")
     target_str = input("Please enter target string : ")
     result = two_pointer.is_subsequence(source_str, target_str)
     print(f"Is {source_str} is a subsequence of  {target_str} : {result}")
 
-    #separator block
-    two_pointer.separator_block()  
-
     source_str_list = ["H", "a", "n", "n", "a", "h"]
     reversed_list = two_pointer.reverse_string(source_str_list)
     print(f" Reversed list is : {reversed_list}")
 
-    #separator block
-    two_pointer.separator_block()  
     input_list = [-7, -3, 2, 3, 11]
     sorted_list = two_pointer.squares_of_sorted_array(input_list)
     print(f"Squared list is : {sorted_list}")
