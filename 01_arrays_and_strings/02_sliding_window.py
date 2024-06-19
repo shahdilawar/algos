@@ -23,6 +23,7 @@ can be solved efficiently with sliding window.
 '''
 
 import logging as log
+from Utility_Module import utility_decorator
 
 #set logging level at debug
 log.basicConfig(level=log.INFO)
@@ -32,8 +33,8 @@ class SlidingWindow:
     #find the longest subarray with a sum less than or equal to k
     # work done in each loop iteration is amortized constant, 
     # so this algorithm has a runtime of O(n) and O(1) space complexity
+    @utility_decorator
     def find_longest_subarray_length(self, nums : list[int], sum : int) -> int:
-        log.info("Started : find_longest_subarray_lenth method")
         log.info(f"list is : {nums}")
 
         # if empty list is passed, raise error
@@ -71,16 +72,14 @@ class SlidingWindow:
             long_window_length = max( long_window_length,
                                     right_index - left_index +1 )
             
-        log.info("Ended : find_longest_subarray_lenth")
         return long_window_length
     
     # Method to identify the longest array length post zeroes flip. 
     # we can flip only one zero at a time. 
     # work done in each loop iteration is amortized constant, 
-    # so this algorithm has a runtime of O(n) and O(1) space complexity    
+    # so this algorithm has a runtime of O(n) and O(1) space complexity
+    @utility_decorator    
     def flip_zeroes_subarray_length(self, binary_string : str) -> int:
-        log.info("Started : flip_zeroes_subarray_length method")
-
         #check if array is not empty
         if ( len(binary_string) == 0 ):
             raise ValueError("List can't be empty")
@@ -117,7 +116,6 @@ class SlidingWindow:
             window_length = max( window_length, 
                                      right_index - left_index + 1)
 
-        log.info("Ended : flip_zeroes_subarray_length method")
         return window_length
     
     #Given an array of positive integers nums and an integer k, 
@@ -128,7 +126,6 @@ class SlidingWindow:
  
     def find_subarrays_that_match(self, nums : list[int], 
                                   match_val : int) -> int:
-        log.info("Started : find_subarrays_that_match method")
         # if match_val is <= 1, then no subarrays can exist.
         if ( match_val <= 1 ):
             return 0
@@ -156,7 +153,6 @@ class SlidingWindow:
             # Add the valid subarrays 
             no_of_valid_sub_arrays += right_index - left_index + 1
         
-        log.info("Ended : find_subarrays_that_match method")
         return no_of_valid_sub_arrays
 
     # Given an integer array nums and an integer k, find the sum of 
@@ -165,7 +161,6 @@ class SlidingWindow:
     # of nums. So this algorithm has a runtime of O(n) and O(1) space complexity
     def find_max_sum_in_fixed_sub_array(self , nums : list[int], 
                                         array_fixed_length : int) -> int:
-        log.info("Started : find_max_sum_in_fixed_sub_array method")
         log.debug(f"List is : {nums}")
         if (len(nums) == 0):
             raise ValueError("List cant be empty")
@@ -186,14 +181,13 @@ class SlidingWindow:
 
             #check the maximum value against each iter
             max_sum = max( max_sum, curr_sum)
-            log.info("Ended : find_max_sum_in_fixed_sub_array method")
         return max_sum
     
     # Find a contiguous subarray whose length is equal to k that has 
-    # the maximum average value and return this value. .
+    # the maximum average value and return this value.
+    @utility_decorator
     def find_max_average(self, nums: list[int],
                           fixed_array_length : int) -> float:
-        log.info("Started : find_max_average method")
         # Initialize the variables.
         max_average = curr_sum = 0
         
@@ -217,13 +211,12 @@ class SlidingWindow:
             # check the maximum average by using max function.
             max_average = max(max_average, (curr_sum / fixed_array_length))
          
-        log.info("Ended : find_max_average method")
         return max_average
     
     #Find the longest ones in input string.
+    @utility_decorator
     def find_longest_ones_in_list(self, nums: list[int], k: int) -> int:
         
-        log.info("Started : find_longest_ones_in_list method")
         if ( len(nums) == 0 ):
             raise ValueError("List can't be empty")
         
@@ -251,9 +244,7 @@ class SlidingWindow:
         
             window_length = max(window_length, 
                                 right_index - left_index + 1)
-        
-        log.info("Ended : find_longest_ones_in_list method")
-        
+                
         return window_length
 
 def test_class_methods():

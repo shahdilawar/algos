@@ -19,10 +19,6 @@ class TwoPointers:
     def __init__(self, name):
         self.name = name
 
-    #Utility method for print decorators
-    def separator_block(self):
-        log.info("-" * 50)
-
     # Test if two strings are palindrome
     @utility_decorator
     def is_palindrome(self, input_string : str) -> bool:
